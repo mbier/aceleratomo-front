@@ -1,0 +1,49 @@
+<div *ngIf="dadosProjetos.length > 0">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Melhoria</th>
+        <th>Problema</th>
+        <th>AG. Merge</th>
+        <th>AG. Teste</th>
+        <th>Total</th>
+        <th>% Melhoria</th>
+        <th>% Problema</th>
+        <th>Impedimento</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let dadosProjeto of dadosProjetos">
+        <td>{{ dadosProjeto.projeto.nome }}</td>
+        <td>{{ dadosProjeto.agAprovacao.qtdMelhoria + dadosProjeto.aprovado.qtdMelhoria + dadosProjeto.emDesenvolvimento.qtdMelhoria
+          + dadosProjeto.recusado.qtdMelhoria }}
+        </td>
+        <td>{{ dadosProjeto.agAprovacao.qtdProblema + dadosProjeto.aprovado.qtdProblema + dadosProjeto.emDesenvolvimento.qtdProblema
+          + dadosProjeto.recusado.qtdProblema }}
+        </td>
+        <td>{{ dadosProjeto.agMerge.qtdMelhoria+dadosProjeto.agMerge.qtdProblema }}</td>
+        <td>{{ dadosProjeto.agTeste.qtdMelhoria+dadosProjeto.agTeste.qtdProblema + dadosProjeto.emTeste.qtdMelhoria+dadosProjeto.emTeste.qtdProblema}}</td>
+        <td>{{ getTotal(dadosProjeto) }}</td>
+        <td>{{ (dadosProjeto.agAprovacao.qtdMelhoria + dadosProjeto.aprovado.qtdMelhoria + dadosProjeto.emDesenvolvimento.qtdMelhoria
+          + dadosProjeto.recusado.qtdMelhoria) * 100 / getTotal(dadosProjeto) | number:'1.2-2'}}</td>
+        <td>{{ (dadosProjeto.agAprovacao.qtdProblema + dadosProjeto.aprovado.qtdProblema + dadosProjeto.emDesenvolvimento.qtdProblema
+          + dadosProjeto.recusado.qtdProblema) * 100 / getTotal(dadosProjeto) | number:'1.2-2'}}</td>
+        <td>{{dadosProjeto.qtdImpedimento}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row ml-1 mr-1">
+    <div *ngFor="let dadosProjeto of dadosProjetos" class="col-lg-6 col-sm-12 card rounded p-0 mb-1">
+      <h4 class="card-title text-center">{{dadosProjeto.projeto.nome}}</h4>
+      <div>
+        <ngx-charts-advanced-pie-chart class="card-body" [results]="dadosProjeto.chartData" [scheme]="'nightLights'">
+        </ngx-charts-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dadosProjetos.length == 0">
+  <h2 class="text-center"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i> Aguarde</h2>
+</div>

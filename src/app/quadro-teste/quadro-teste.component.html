@@ -1,0 +1,33 @@
+<div *ngIf="dadosProjetos.length > 0">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Equipe</th>
+        <th>Desenv</th>
+        <th>AG. Merge</th>
+        <th>AG. Teste</th>
+        <th>Em Teste</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let dadosProjeto of dadosProjetos">
+        <td>{{ dadosProjeto.projeto.grupo }}</td>
+        <td [ngClass]="{'bg-danger text-white' : dadosProjeto.emDesenvolvimento.qtdBlocante + dadosProjeto.recusado.qtdBlocante > 0 }">{{ dadosProjeto.emDesenvolvimento.qtdMelhoria + dadosProjeto.emDesenvolvimento.qtdProblema + dadosProjeto.recusado.qtdMelhoria + dadosProjeto.recusado.qtdProblema}} (B: {{dadosProjeto.emDesenvolvimento.qtdBlocante + dadosProjeto.recusado.qtdBlocante}} R: {{dadosProjeto.emDesenvolvimento.qtdRecusado + dadosProjeto.recusado.qtdRecusado}})
+        </td>
+        <td [ngClass]="{'bg-danger text-white' : dadosProjeto.agMerge.qtdBlocante > 0 }">{{ dadosProjeto.agMerge.qtdMelhoria+dadosProjeto.agMerge.qtdProblema }} (B: {{dadosProjeto.agMerge.qtdBlocante}}
+          R: {{dadosProjeto.agMerge.qtdRecusado}})</td>
+        <td [ngClass]="{'bg-danger text-white' : dadosProjeto.agTeste.qtdBlocante > 0 }">{{ dadosProjeto.agTeste.qtdMelhoria+dadosProjeto.agTeste.qtdProblema}} (B: {{dadosProjeto.agTeste.qtdBlocante}} R:
+          {{dadosProjeto.agTeste.qtdRecusado}})
+        </td>
+        <td [ngClass]="{'bg-danger text-white' : dadosProjeto.emTeste.qtdBlocante > 0 }">{{ dadosProjeto.emTeste.qtdMelhoria+dadosProjeto.emTeste.qtdProblema}} (B: {{dadosProjeto.emTeste.qtdBlocante}} R:
+          {{dadosProjeto.emTeste.qtdRecusado}})
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 class="text-center">B = Blocante / R = Recusa</h4>
+</div>
+<div *ngIf="dadosProjetos.length == 0">
+  <h2 class="text-center"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i> Aguarde</h2>
+</div>

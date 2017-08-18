@@ -1,0 +1,7 @@
+div.card > div{
+  height: 200px;
+}
+
+ngx-charts-advanced-pie-chart {
+  padding: 0;
+}
